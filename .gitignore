@@ -1,0 +1,5 @@
+node_modules/
+lambda/node_modules/
+.env
+lambda/*.zip
+chromeExtenstion/

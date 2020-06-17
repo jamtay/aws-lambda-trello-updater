@@ -1,0 +1,17 @@
+{
+  "name": "trello-updater",
+  "version": "1.0.0",
+  "description": "Update a trello list to due dates to tommorrow and complete",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r dotenv/config index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "moment": "^2.26.0",
+    "node-fetch": "^2.6.0"
+  }
+}
