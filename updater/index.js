@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const moment = require('moment')
-const decryptEnvVars = require('./decrypt').decryptEnvVars
 
 /**
 * Get the extra days to add to the due date for the special case. If the label is Gym or Work and it is a Friday or Saturday, then add the extra days required to set it to a Monday due date
@@ -23,11 +22,9 @@ const getExtraDaysToAdd = (itemLabel) => {
 // curl 'https://api.trello.com/1/members/me/boards?key={key}&token={token}' > ~/Desktop/trelloBoards.json
 // Example get lists on a board (to get the id
 // curl 'https://api.trello.com/1/boards/5c759b9bf99e913c59124588/lists?key={key}&token={token}' > ~/Desktop/trelloLists.json
-exports.updateTrello = async() => {
-  const [boardId, key, token] = await decryptEnvVars()
+exports.updateTrello = async(boardId, key, token) => {
 
   const urlKeyTokenParams = `?key=${key}&token=${token}`
-
 
   //TODO: Move key, token and list ids to env vars and push to git
   const getUrl = `https://api.trello.com/1/lists/${boardId}/cards${urlKeyTokenParams}`

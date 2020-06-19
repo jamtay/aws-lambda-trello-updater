@@ -14,12 +14,24 @@ A node.js program to update cards in a trello board. It shifts all due dates to 
 2. Update top level `index.js`
 3. Run `npm start`
 
+### Linked package
+
+The `updater` directory is `npm linked` to both `lambda` and the root directories
+
+To link:
+
+1. `npm link` in `updater` directory
+2. `npm link /path/to/updater` where you want to link from. E.g from `lambda` run `npm link ../updater`
+3. `npm install —save /path/to/updater`. E.g from `lambda` run `npm install --save ../updater`
+
+Check it works by running npm start after running an npm install because of this issue: https://github.com/npm/npm/issues/18980
+This means that if you just do npm link, then npm install will blow it away. So must do this https://github.com/npm/rfcs/pull/3/files
 
 ## Updating Lamdba function
 
 1. Update the code you want inside the lamdba directory
-2. Run `npm run zip` to create a zip file
-3. Run `npm run upload` to upload to your function
+2. Run `npm run zip` to create a zip file and `npm run push` to push the zip to your AWS lambda function
+3. OR run `npm run upload` to both zip and upload to your function to AWS lambda
 4. Open AWS console and navigate to this function
 5. Run the test command (in AWS console) before deploying to check it works
 6. Deploy

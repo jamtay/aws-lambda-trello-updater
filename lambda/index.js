@@ -1,6 +1,6 @@
 const Alexa = require('ask-sdk-core');
-const fetch = require('node-fetch');
-const updateTrello = require('./trelloUpdater').updateTrello
+const {decryptEnvVars} = require('./decrypt')
+const {updateTrello} = require('updater')
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -20,7 +20,8 @@ const UpdateTrelloIntent = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'UpdateTrelloIntent';
     },
     async handle(handlerInput) {
-        const updatedResponse = await updateTrello();
+        const [boardId, key, token] = await decryptEnvVars()
+        const updatedResponse = await updateTrello(boardId, key, token);
 
         const updateFinishedText = `${updatedResponse}. You are welcome! I hope you had a lovely day`
         return handlerInput.responseBuilder

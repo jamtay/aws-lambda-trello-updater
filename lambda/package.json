@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "zip": "rm -rf lambdaFunc.zip && zip -r lambdaFunc.zip .",
-    "upload": "aws lambda update-function-code --function-name serverlessrepo-alexa-skil-alexaskillskitnodejsfact-3GT151XWAS56 --zip-file fileb://~/Documents/PersonalCoding/trello-updater/lambda/lambdaFunc.zip"
+    "push": "aws lambda update-function-code --function-name serverlessrepo-alexa-skil-alexaskillskitnodejsfact-3GT151XWAS56 --zip-file fileb://~/Documents/PersonalCoding/trello-updater/lambda/lambdaFunc.zip",
+    "upload": "npm run zip && npm run push"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +15,6 @@
     "ask-sdk-core": "^2.0.0",
     "ask-sdk-model": "^1.0.0",
     "i18next": "^15.0.5",
-    "moment": "^2.26.0",
-    "node-fetch": "^2.6.0"
+    "updater": "file:../updater"
   }
 }
