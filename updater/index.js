@@ -4,8 +4,8 @@ const {updateItems} = require('./updateItems')
 const {
   getExtraDaysToAddToSkipWeekend,
   shouldSetToItemComplete,
-  getCardsFurtherDueTime,
-  getWeekendCardsFurtherDueTime} = require('./dateUpdater')
+  getCardsFutureDueTime,
+  getWeekendCardsFutureDueTime} = require('./dateUpdater')
 
 
 // Example get boards to get board id to find list id
@@ -50,8 +50,8 @@ exports.updateTrello = async(key, token, boardId, everydayId, weekendId, boardNa
     }
   }
 
-  const cardsUpdated = await updateItems(everydayId, everydayName, shouldSetToItemComplete, getCardsFurtherDueTime, urlKeyTokenParams)
-  const weekendCardsUpdated = await updateItems(weekendId, weekendName, () => false, getWeekendCardsFurtherDueTime, urlKeyTokenParams)
+  const cardsUpdated = await updateItems(everydayId, everydayName, shouldSetToItemComplete, getCardsFutureDueTime, urlKeyTokenParams)
+  const weekendCardsUpdated = await updateItems(weekendId, weekendName, () => false, getWeekendCardsFutureDueTime, urlKeyTokenParams)
 
   // Update the list to be at the start of the week
   const putUrl = `https://api.trello.com/1/lists/${everydayId}${urlKeyTokenParams}&pos=top`
