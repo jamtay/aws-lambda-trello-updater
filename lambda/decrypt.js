@@ -7,6 +7,19 @@ const keyEncrypted = process.env['TRELLO_KEY'];
 let keyDecrypted;
 const tokenEncrypted = process.env['TRELLO_TOKEN'];
 let tokenDecrypted;
+const everydayEncrypted = process.env['TRELLO_EVERYDAY_ID'];
+let everydayDecrypted;
+const weekendEncrypted = process.env['TRELLO_WEEKEND_ID'];
+let weekendDecrypted;
+
+const getDecrpyted = async (encrypted, kms) => {
+  if (!encrypted) {
+    return encrypted
+  }
+  const req = { CiphertextBlob: Buffer.from(encrypted, 'base64') };
+  const data = await kms.decrypt(req).promise();
+  return data.Plaintext.toString('ascii');
+}
 
 exports.decryptEnvVars = async () => {
     if (!boardDecrypted) {
@@ -14,21 +27,15 @@ exports.decryptEnvVars = async () => {
         // function handler so that these are decrypted once per container
         const kms = new AWS.KMS();
         try {
-            const req = { CiphertextBlob: Buffer.from(boardEncrypted, 'base64') };
-            const data = await kms.decrypt(req).promise();
-            boardDecrypted = data.Plaintext.toString('ascii');
-
-            const reqKey = { CiphertextBlob: Buffer.from(keyEncrypted, 'base64') };
-            const dataKey = await kms.decrypt(reqKey).promise();
-            keyDecrypted = dataKey.Plaintext.toString('ascii');
-
-            const reqToken = { CiphertextBlob: Buffer.from(tokenEncrypted, 'base64') };
-            const dataToken = await kms.decrypt(reqToken).promise();
-            tokenDecrypted = dataToken.Plaintext.toString('ascii');
+            boardDecrypted = await getDecrpyted(boardEncrypted, kms);
+            keyDecrypted = await getDecrpyted(keyEncrypted, kms);
+            tokenDecrypted = await getDecrpyted(tokenEncrypted, kms);
+            everydayDecrypted = await getDecrpyted(everydayEncrypted, kms);
+            weekendDecrypted = await getDecrpyted(weekendEncrypted, kms);
         } catch (err) {
             console.log('Decrypt error:', err);
             throw err;
         }
     }
-    return [boardDecrypted, keyDecrypted, tokenDecrypted]
+    return [keyDecrypted, tokenDecrypted, boardDecrypted, everydayDecrypted, weekendDecrypted]
 };

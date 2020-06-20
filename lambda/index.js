@@ -20,8 +20,10 @@ const UpdateTrelloIntent = {
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'UpdateTrelloIntent';
     },
     async handle(handlerInput) {
-        const [boardId, key, token] = await decryptEnvVars()
-        const updatedResponse = await updateTrello(boardId, key, token);
+        const [key, token, boardId, everydayId, weekendId] = await decryptEnvVars()
+
+        const updatedResponse = await updateTrello(key, token, boardId, everydayId, weekendId,
+          process.env.TRELLO_BOARD_NAME || 'Life', process.env.TRELLO_EVERYDAY_NAME || 'Everyday!', process.env.TRELLO_WEEKEND_NAME || 'Weekend');
 
         const updateFinishedText = `${updatedResponse}. You are welcome! I hope you had a lovely day`
         return handlerInput.responseBuilder

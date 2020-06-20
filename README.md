@@ -11,8 +11,9 @@ A node.js program to update cards in a trello board. It shifts all due dates to 
 ## Running locally
 
 1. Add a `.env` file with `TRELLO_KEY`, `TRELLO_TOKEN` and `TRELLO_BOARD_ID`. The `TRELLO_BOARD_ID` can be found by `curl 'https://api.trello.com/1/members/me/boards?key={key}&token={token}'`. The `TRELLO_KEY` and `TRELLO_TOKEN`
-2. Update top level `index.js`
-3. Run `npm start`
+2. Add the remaining env vars `TRELLO_EVERYDAY_ID`, `TRELLO_WEEKEND_ID`, `TRELLO_BOARD_NAME`, `TRELLO_EVERYDAY_NAME`, `TRELLO_WEEKEND_NAME`. You only need the names and not the ids, but it will run quicker with the ids instead, because then it won't have to fetch the ids from the api 
+3. Update top level `index.js`
+4. Run `npm start`
 
 ### Linked package
 
