@@ -10,7 +10,8 @@ const boardName = process.env.TRELLO_BOARD_NAME || 'Life'
 const everydayName = process.env.TRELLO_EVERYDAY_NAME || 'Everyday!'
 const weekendName = process.env.TRELLO_WEEKEND_NAME || 'Weekend'
 
-updateTrello(key, token, boardId, everydayId, weekendId, boardName, everydayName, weekendName).then(() => {
+updateTrello(key, token, boardId, everydayId, weekendId, boardName, everydayName, weekendName).then((res) => {
+  console.log(res)
   console.log('==================================')
   console.log('successfully updated all trello cards (which have been completed and are due yesterday, today, or tomorrow) in EVERYDAY list to be due tomorrow')
 
