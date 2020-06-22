@@ -10,6 +10,8 @@ const isTodayFriday = moment().isoWeekday() === 5
 const isTodaySaturday = moment().isoWeekday() === 6
 const isTodaySunday = moment().isoWeekday() === 7
 
+const isEndOfWorkWeek = isTodayFriday || isTodaySaturday || isTodaySunday
+
 /**
 * Get the extra days to add to the due date for the special case. If it is a Friday or Saturday, then add the extra days required to set it to a Monday due date
 **/
@@ -103,5 +105,6 @@ module.exports = {
   getExtraDaysToAddToSkipWeekend,
   shouldSetToItemComplete,
   getCardsFutureDueTime,
-  getWeekendCardsFutureDueTime
+  getWeekendCardsFutureDueTime,
+  isEndOfWorkWeek
 }

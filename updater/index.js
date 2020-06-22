@@ -5,7 +5,9 @@ const {
   getExtraDaysToAddToSkipWeekend,
   shouldSetToItemComplete,
   getCardsFutureDueTime,
-  getWeekendCardsFutureDueTime} = require('./dateUpdater')
+  getWeekendCardsFutureDueTime,
+  isEndOfWorkWeek
+} = require('./dateUpdater')
 
 
 // Example get boards to get board id to find list id
@@ -53,14 +55,16 @@ exports.updateTrello = async(key, token, boardId, everydayId, weekendId, boardNa
   const cardsUpdated = await updateItems(everydayId, everydayName, shouldSetToItemComplete, getCardsFutureDueTime, urlKeyTokenParams)
   const weekendCardsUpdated = await updateItems(weekendId, weekendName, () => false, getWeekendCardsFutureDueTime, urlKeyTokenParams)
 
-  // Update the list to be at the start of the week
-  const putUrl = `https://api.trello.com/1/lists/${everydayId}${urlKeyTokenParams}&pos=top`
-  await fetch(putUrl, {
-    method: 'PUT',
-    headers: {
-      'Accept': 'application/json'
-    }
-  })
+  // Update the list to be at the start of the week if it is the end of the week
+  if (isEndOfWorkWeek) {
+    const putUrl = `https://api.trello.com/1/lists/${everydayId}${urlKeyTokenParams}&pos=top`
+    await fetch(putUrl, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+  }
 
   return `I have updated ${cardsUpdated} card's due date in your everyday list and ${weekendCardsUpdated} in your weekend list`
 }
