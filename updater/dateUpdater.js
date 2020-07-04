@@ -94,7 +94,7 @@ const getWeekendCardsFutureDueTime = (itemDue) => {
     }
   }
 
-  if (daysFromCardDueTillTomorrow) {
+  if (daysFromCardDueTillTomorrow !== undefined) {
     return moment(itemDue).add(daysFromCardDueTillTomorrow, 'days').format('YYYY-MM-DDTHH:mm:ss.SSSSZ')
   } else {
     return undefined

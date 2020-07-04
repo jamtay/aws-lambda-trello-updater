@@ -17,6 +17,7 @@ exports.updateItems = async (id, listName, shouldSetToItemComplete, getCardsFutu
   for (let item of cards) {
 
     if (item.dueComplete) {
+
       const cardsFutherDueTime = getCardsFutureDueTime(item.due)
 
       if (cardsFutherDueTime) {
