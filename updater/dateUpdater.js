@@ -5,6 +5,10 @@ const startOfToday = moment().startOf('day')
 const startOfYesterday = moment().add(-1, 'days').startOf('day')
 const startOfTomorrow = moment().add(1, 'days').startOf('day')
 const startOf2Days = moment().add(2, 'days').startOf('day')
+//Dat difference for Friday to last Sunday
+const startOf5DaysAgo = moment().add(-5, 'days').startOf('day')
+//Dat difference for Saturday to last Sunday
+const startOf6DaysAgo = moment().add(-6, 'days').startOf('day')
 
 const isTodayFriday = moment().isoWeekday() === 5
 const isTodaySaturday = moment().isoWeekday() === 6
@@ -71,6 +75,8 @@ const getWeekendCardsFutureDueTime = (itemDue) => {
   const isDueYesterday = startOfYesterday.isSame(startOfCardsDueDate)
   const isDueTomorrow = startOfTomorrow.isSame(startOfCardsDueDate)
   const isCardDue2Days = startOf2Days.isSame(startOfCardsDueDate)
+  const isDue5DaysAgo = startOf5DaysAgo.isSame(startOfCardsDueDate)
+  const isDue6DaysAgo = startOf6DaysAgo.isSame(startOfCardsDueDate)
 
   let daysFromCardDueTillTomorrow = undefined
 
@@ -83,6 +89,10 @@ const getWeekendCardsFutureDueTime = (itemDue) => {
       daysFromCardDueTillTomorrow = 0
     } else if (isCardDue2Days) {
       daysFromCardDueTillTomorrow = -1
+    }  else if (isTodayFriday && isDue5DaysAgo) {
+      daysFromCardDueTillTomorrow = 6
+    } else if (isDue6DaysAgo) {
+      daysFromCardDueTillTomorrow = 7
     }
   } else if (isTodaySunday) {
     if (isDueYesterday) {
